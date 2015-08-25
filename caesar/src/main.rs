@@ -1,20 +1,23 @@
 use std::fs::File;
 use std::io::{BufReader, BufRead, Write};
 
+fn alpha_to_code(ch: u8) -> u8 {
+    match ch {
+        b'a'...b'z' => ch - b'a',
+        b'A'...b'Z' => ch - b'A',
+        _           => ch
+    }
+}
+
+fn code_to_alpha(c: u8) -> u8 {
+    c + b'a'
+}
+
 fn encode_char(ch: u8) -> u8 {
-    let lower = b'a' <= ch && ch <= b'z';
-    let upper = b'A' <= ch && ch <= b'Z';
-
-    if lower || upper {
-        let c = ch + 3;
-
-        if (lower && c > b'z') || (upper && c > b'Z') {
-            c - 26
-        } else {
-            c
-        }
-    } else {
-        ch
+    match ch {
+        b'a'...b'z' => code_to_alpha((alpha_to_code(ch) + 3) % 26),
+        b'A'...b'Z' => code_to_alpha((alpha_to_code(ch) + 3) % 26) - b'a' + b'A',
+        _           => ch
     }
 }
 
