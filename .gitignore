@@ -1,11 +1,17 @@
+# object files
 *.o
 *.so
 *.rlib
 *.dll
 *.exe
 
+# tmp
+*.racertmp
+
+# in/out
 in*.txt
 out*.txt
 
+# build
 target/
 
