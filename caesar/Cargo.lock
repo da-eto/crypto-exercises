@@ -1,4 +1,4 @@
 [root]
-name = "caesar_cipher"
+name = "caesar"
 version = "0.1.0"
 

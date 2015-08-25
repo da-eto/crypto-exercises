@@ -1,4 +1,4 @@
 [package]
-name = "caesar_cipher"
+name = "caesar"
 version = "0.1.0"
 authors = ["Ilya Pleshakov <da-eto@ya.ru>"]
