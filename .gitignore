@@ -1,0 +1,11 @@
+*.o
+*.so
+*.rlib
+*.dll
+*.exe
+
+in*.txt
+out*.txt
+
+target/
+
