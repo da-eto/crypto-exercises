@@ -1,5 +1,5 @@
 [package]
-name = "stream-weak"
+name = "stream"
 version = "0.1.0"
 authors = ["Ilya Pleshakov <da-eto@ya.ru>"]
 
