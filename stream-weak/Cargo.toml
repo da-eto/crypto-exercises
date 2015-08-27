@@ -1,0 +1,8 @@
+[package]
+name = "stream-weak"
+version = "0.1.0"
+authors = ["Ilya Pleshakov <da-eto@ya.ru>"]
+
+[dependencies]
+rand = "0.3"
+
