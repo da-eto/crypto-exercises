@@ -41,7 +41,7 @@ fn main() {
     let mut key = String::new();
     key_file.read_to_string(&mut key).ok();
     let seed: &[_] = &[key.trim().parse::<u32>().ok().unwrap()];
-    let mut rng: ChaChaRng = SeedableRng::from_seed(seed);
+    let mut rng: ChaChaRng = ChaChaRng::new_unseeded();
     let mut output = File::create("out.txt").unwrap();
 
     for line in input.lines().filter_map(|res| res.ok()) {
