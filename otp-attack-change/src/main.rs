@@ -1,17 +1,5 @@
 use std::fs::File;
-use std::io::{BufReader, BufRead, Read, Write};
-
-fn alpha_to_code(ch: u8) -> u8 {
-    match ch {
-        b'a'...b'z' => ch - b'a',
-        b'A'...b'Z' => ch - b'A',
-        _           => ch
-    }
-}
-
-fn code_to_alpha(c: u8) -> u8 {
-    c + b'a'
-}
+use std::io::{BufReader, BufRead, Read};
 
 fn hex_to_u8(a: u8) -> u8 {
     match a {
@@ -36,7 +24,7 @@ fn vec_u8_from_hex_string(s: &String) -> Vec<u8> {
 fn hex_string_from_vec(v: &Vec<u8>) -> String {
     let mut s = String::with_capacity(v.len() * 2);
 
-    for (i, &c) in v.iter().enumerate() {
+    for &c in v.iter() {
         s.push(u8_to_hex(c / 16) as char);
         s.push(u8_to_hex(c % 16) as char);
     }
