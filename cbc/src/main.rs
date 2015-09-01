@@ -1,6 +1,5 @@
 extern crate crypto;
 
-use std::cmp;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
@@ -19,19 +18,10 @@ fn vec_u8_from_hex_string(s: &String) -> Vec<u8> {
     s.as_bytes().chunks(2).map(|a| hex_to_u8(a[0]) * 16 + hex_to_u8(a[1])).collect()
 }
 
-fn vec_xor(v1: &Vec<u8>, v2: &Vec<u8>) -> Vec<u8> {
-    let mut v = Vec::with_capacity(cmp::min(v1.len(), v2.len()));
-
-    for (a, b) in v1.iter().zip(v2.iter()) {
-        v.push(a ^ b);
-    }
-
-    v
-}
-
 fn cbc_decrypt(key: &Vec<u8>, msg: &Vec<u8>) -> Vec<u8> {
     let mut v = Vec::with_capacity(msg.len());
     let (iv, msg) = msg.split_at(16);
+    // TODO: find better way to copy arrays
     let mut prev = &mut [0; 16];
 
     for i in 0..16 {
@@ -55,7 +45,7 @@ fn cbc_decrypt(key: &Vec<u8>, msg: &Vec<u8>) -> Vec<u8> {
 
     let pad = v.pop().unwrap();
 
-    for i in 1..pad {
+    for _ in 1..pad {
         v.pop();
     }
 
