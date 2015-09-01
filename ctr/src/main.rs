@@ -3,8 +3,8 @@ extern crate crypto;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
-use crypto::aessafe::{AesSafe128Decryptor, AesSafe128Encryptor};
-use crypto::symmetriccipher::{BlockDecryptor, BlockEncryptor};
+use crypto::aessafe::AesSafe128Encryptor;
+use crypto::symmetriccipher::BlockEncryptor;
 
 fn hex_to_u8(a: u8) -> u8 {
     match a {
@@ -43,10 +43,10 @@ fn ctr_decrypt(key: &Vec<u8>, msg: &Vec<u8>) -> Vec<u8> {
     }
 
     let mut m_i = &mut [0; 16];
-    let decryptor = AesSafe128Encryptor::new(&key[..]);
+    let encryptor = AesSafe128Encryptor::new(&key[..]);
 
     for c_i in msg.chunks(16) {
-        decryptor.encrypt_block(prev, &mut m_i[..]);
+        encryptor.encrypt_block(prev, &mut m_i[..]);
 
         for i in 0..c_i.len() {
             v.push(c_i[i] ^ m_i[i]);
