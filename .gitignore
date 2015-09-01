@@ -16,3 +16,6 @@ out*.txt
 # build
 target/
 
+# ide
+.project
+
