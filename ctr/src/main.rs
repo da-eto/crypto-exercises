@@ -1,3 +1,5 @@
+#![feature(clone_from_slice)]
+
 extern crate crypto;
 
 use std::fs::File;
@@ -49,10 +51,7 @@ fn ctr_crypt(key: &[u8], iv: &[u8], msg: &[u8]) -> Vec<u8> {
     let mut v = Vec::with_capacity(msg.len());
     // TODO: find better way to copy arrays
     let mut prev = &mut [0; 16];
-
-    for i in 0..16 {
-        prev[i] = iv[i];
-    }
+    prev.clone_from_slice(iv);
 
     let mut m_i = &mut [0; 16];
     let encryptor = AesSafe128Encryptor::new(key);
