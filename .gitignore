@@ -8,6 +8,7 @@
 # tmp
 *.racertmp
 *.tmp
+*.obj
 
 # in/out
 in*.txt
