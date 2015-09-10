@@ -2,8 +2,10 @@
 #include <sstream>
 #include <vector>
 
-std::vector<uint8_t> to_codes(std::string const &s) {
-    std::vector<uint8_t> codes;
+typedef std::vector<uint8_t> uint8_vec;
+
+uint8_vec hex_to_codes(std::string const &s) {
+    uint8_vec codes;
     std::stringstream ss;
     ss << std::hex;
 
@@ -19,17 +21,26 @@ std::vector<uint8_t> to_codes(std::string const &s) {
     return codes;
 }
 
-std::string from_codes(std::vector<uint8_t> const &v) {
-    std::string s;
-
+std::string codes_to_hex(uint8_vec const &v) {
     std::stringstream ss;
     ss << std::hex;
 
-    for (std::vector<uint8_t>::const_iterator it = v.begin(); it != v.end(); ++it) {
+    for (uint8_vec::const_iterator it = v.begin(); it != v.end(); ++it) {
         ss << (int) *it;
     }
 
     return ss.str();
+}
+
+uint8_vec xor_vec(uint8_vec const &a, uint8_vec const &b) {
+    uint8_vec v;
+    v.reserve(std::min(a.size(), b.size()));
+
+    for (uint8_vec::const_iterator i = a.begin(), j = b.begin(); i != a.end() && j != b.end(); ++i, ++j) {
+        v.push_back(*i ^ *j);
+    }
+
+    return v;
 }
 
 int main() {
@@ -40,8 +51,8 @@ int main() {
     std::getline(std::cin, m);
     std::getline(std::cin, fake);
 
-    std::vector<uint8_t> iv_codes = to_codes(iv);
-    std::vector<uint8_t> c_codes = to_codes(c);
+    uint8_vec iv_codes = hex_to_codes(iv);
+    uint8_vec c_codes = hex_to_codes(c);
 
     for (auto it = iv_codes.begin(); it < iv_codes.end(); ++it) {
         std::cout << (int) *it << " ";
@@ -49,7 +60,7 @@ int main() {
 
     std::cout << std::endl;
 
-    std::cout << from_codes(c_codes);
+    std::cout << codes_to_hex(c_codes);
 
     return 0;
 }
