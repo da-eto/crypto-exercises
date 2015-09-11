@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <iomanip>
 
 typedef std::vector<uint8_t> uint8_vec;
 
@@ -26,7 +27,7 @@ std::string codes_to_hex(uint8_vec const &v) {
     ss << std::hex;
 
     for (uint8_vec::const_iterator it = v.begin(); it != v.end(); ++it) {
-        ss << (int) *it;
+        ss << std::setw(2) << std::setfill('0') << (int) *it;
     }
 
     return ss.str();
@@ -44,23 +45,17 @@ uint8_vec xor_vec(uint8_vec const &a, uint8_vec const &b) {
 }
 
 int main() {
-    std::string iv, c, m, fake;
+    std::string iv_str, message_str, fake_str;
 
-    std::getline(std::cin, iv);
-    std::getline(std::cin, c);
-    std::getline(std::cin, m);
-    std::getline(std::cin, fake);
+    std::getline(std::cin, iv_str);
+    std::getline(std::cin, message_str);
+    std::getline(std::cin, fake_str);
 
-    uint8_vec iv_codes = hex_to_codes(iv);
-    uint8_vec c_codes = hex_to_codes(c);
+    uint8_vec iv = hex_to_codes(iv_str);
+    uint8_vec m(message_str.begin(), message_str.end());
+    uint8_vec fake(fake_str.begin(), fake_str.end());
 
-    for (auto it = iv_codes.begin(); it < iv_codes.end(); ++it) {
-        std::cout << (int) *it << " ";
-    }
-
-    std::cout << std::endl;
-
-    std::cout << codes_to_hex(c_codes);
+    std::cout << codes_to_hex(xor_vec(iv, xor_vec(m, fake))) << std::endl;
 
     return 0;
 }
