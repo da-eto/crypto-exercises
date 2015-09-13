@@ -31,12 +31,17 @@ int main(int argc, char *argv[]) {
                 "4a61044426fb515dad3f21f18aa577c0"
                 "bdf302936266926ff37dbf7035d5eeb8";
 
+        std::string guess_text = ""
+                "00000000000000000000000000000000"
+                "00000000000000000000000000000000"
+                "00000000000000000000000000000000";
+
         // Form the request. We specify the "Connection: close" header so that the
         // server will close the socket after transmitting the response. This will
         // allow us to treat all data up until the EOF as the content.
         boost::asio::streambuf request;
         std::ostream request_stream(&request);
-        request_stream << "GET /po?er=" << cipher_text << " HTTP/1.0\r\n";
+        request_stream << "GET /po?er=" << guess_text << " HTTP/1.0\r\n";
         request_stream << "Host: " << argv[1] << "\r\n";
         request_stream << "Accept: */*\r\n";
         request_stream << "Connection: close\r\n\r\n";
